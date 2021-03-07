@@ -5,7 +5,7 @@ AdvancedJumpTO is ja /jumpto Plugin for Minecraft BungeeCord Servers.
 
   - /jumpto <player> -> sends you to the Server the Player is on
   - TabComplete with automatical add and remove on Player Join.
-
+  - fully customizable!
 
 
 It's powered by the BungeeCord API.
