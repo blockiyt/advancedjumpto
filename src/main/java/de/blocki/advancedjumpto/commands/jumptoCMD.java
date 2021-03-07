@@ -1,12 +1,10 @@
 package de.blocki.advancedjumpto.commands;
 
 import de.blocki.advancedjumpto.main.Main;
-import de.blocki.advancedjumpto.main.utils.ConfigManager;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.plugin.Command;
@@ -32,21 +30,21 @@ public class jumptoCMD extends Command implements TabExecutor, Listener {
                     if(!(playertoget.getUniqueId() == player.getUniqueId())) {
                         Server servertoget = playertoget.getServer();
                         if (player.getServer().getInfo().getName().equalsIgnoreCase(servertoget.getInfo().getName())) {
-                            player.sendMessage(new ComponentBuilder(Main.prefix + ConfigManager.get("MessageAlreadyConnectedToServer").replace("%SERVERNAME%", servertoget.getInfo().getName())).color(ChatColor.RED).create());
+                            player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("MessageAlreadyConnectedToServer").replace("%SERVERNAME%", servertoget.getInfo().getName())).color(ChatColor.RED).create());
                         } else {
-                            player.sendMessage(new ComponentBuilder(Main.prefix + ConfigManager.get("MessageConnectingToServer").replace("%SERVERNAME%", servertoget.getInfo().getName())).create());
+                            player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("MessageConnectingToServer").replace("%SERVERNAME%", servertoget.getInfo().getName())).create());
                             player.connect(servertoget.getInfo());
                         }
                     }else {
-                        player.sendMessage(new ComponentBuilder(Main.prefix + ConfigManager.get("MessageNoTeleportYourself")).create());
+                        player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("MessageNoTeleportYourself")).create());
                     }
                 }else {
                     //player not found
-                    player.sendMessage(new ComponentBuilder(Main.prefix + ConfigManager.get("MessagePlayerNotFound")).create());
+                    player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("MessagePlayerNotFound")).create());
                 }
             }else {
                 //kein player angegeben
-                player.sendMessage(new ComponentBuilder(Main.prefix + ConfigManager.get("MessageNoPlayer")).create());
+                player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("MessageNoPlayer")).create());
             }
         }else {
             //is kein player

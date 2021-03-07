@@ -1,44 +1,75 @@
 package de.blocki.advancedjumpto.main;
 
 import de.blocki.advancedjumpto.commands.jumptoCMD;
-import de.blocki.advancedjumpto.listener.listener;
-import de.blocki.advancedjumpto.main.utils.ConfigManager;
+import de.blocki.advancedjumpto.listener.PlayerListener;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class Main extends Plugin {
 
-    public static String prefix = "";
+    private static final Logger LOG = Logger.getLogger("JumpTO");
+
+    public static String prefix;
 
     private static Main instance;
 
+    public static Configuration cfg = null;
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        //instance the Class
         Main.instance = this;
 
+        //register events and commands
         getProxy().getPluginManager().registerCommand(this, new jumptoCMD("jumpto", "jumpto.use"));
-        getProxy().getPluginManager().registerListener(this, new listener());
+        getProxy().getPluginManager().registerListener(this, new PlayerListener());
 
-        setDefaultConfig();
-    }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
+        // Handle configuration.
+        if (!getDataFolder().exists()) {
+            getDataFolder().mkdir();
+        }
+        File config = new File(getDataFolder(),"config.yml");
+
+        /*
+         * Create configuration file if it does not exists; otherwise, load it
+         */
+        if (!config.exists()) {
+            try {
+                // First time run - do some initialization.
+                LOG.info("Configuring JumpTO module for the first time...");
+
+                // Initialize the configuration file.
+                config.createNewFile();
+                cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(config);
+
+                cfg.set("MessagePrefix", "§7[§6JumpTo§7]");
+                cfg.set("MessagePlayerNotFound", "The player you specified got not found!");
+                cfg.set("MessageNoPlayer", "You did not specify a player!");
+                cfg.set("MessageNoTeleportYourself", "You cannot jump to yourself!");
+                cfg.set("MessageAlreadyConnectedToServer", "You are already connected to the Server %SERVERNAME%!");
+                cfg.set("MessageConnectingToServer", "You are connecting to the Server %SERVERNAME%!");
+                ConfigurationProvider.getProvider(YamlConfiguration.class).save(cfg, config);
+                prefix = cfg.get("MessagePrefix", "§7[§6JumpTo§7]") + " ";
+
+            } catch (Exception ex) {
+                LOG.log(Level.SEVERE, "Error creating configuration file", ex);
+                return;
+            }
+        } else {
+            // Load configuration.
+            try { cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(config); } catch (IOException e) { e.printStackTrace(); }
+        }
     }
 
     public static Main getInstance() {
         return instance;
-    }
-
-    private void setDefaultConfig(){
-        if(ConfigManager.get("MessagePrefix") == null){ ConfigManager.set("MessagePrefix", "§7[§6Rank§7]"); }
-        if(ConfigManager.get("MessagePlayerNotFound") == null){ ConfigManager.set("MessagePlayerNotFound", "The player you specified got not found!"); }
-        if(ConfigManager.get("MessageNoPlayer") == null){ ConfigManager.set("MessageNoPlayer", "You did not specify an Player!"); }
-        if(ConfigManager.get("MessageNoTeleportYourself") == null){ ConfigManager.set("MessageNoTeleportYourself", "You cannot jump to yourself!"); }
-        if(ConfigManager.get("MessageAlreadyConnectedToServer") == null){ ConfigManager.set("MessageAlreadyConnectedToServer", "You are already connected to the Server %SERVERNAME%!"); }
-        if(ConfigManager.get("MessageConnectingToServer") == null){ ConfigManager.set("MessageConnectingToServer", "You are connecting to the Server %SERVERNAME%!"); }
-        ConfigManager.save();
-        prefix = ConfigManager.get("MessagePrefix") + " ";
     }
 }
