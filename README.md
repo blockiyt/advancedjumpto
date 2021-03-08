@@ -11,7 +11,7 @@ AdvancedJumpTO is a `/jumpto` Plugin for Minecraft BungeeCord Servers.
 It's powered by the BungeeCord API.
 
 
-###Permissions
+### Permissions
  - jumpto.use -> Use the Plugin
 
 
