@@ -10,6 +10,7 @@ import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.TabExecutor;
+import net.md_5.bungee.event.EventPriority;
 
 import java.util.ArrayList;
 import java.util.List;

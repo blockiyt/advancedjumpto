@@ -28,8 +28,8 @@ public final class Main extends Plugin {
         Main.instance = this;
 
         //register events and commands
-        getProxy().getPluginManager().registerCommand(this, new jumptoCMD("jumpto", "jumpto.use"));
-        getProxy().getPluginManager().registerListener(this, new PlayerListener());
+        /*getProxy().getPluginManager().registerCommand(this, new jumptoCMD("jumpto", "jumpto.use"));
+        getProxy().getPluginManager().registerListener(this, new PlayerListener());*/
 
 
         // Handle configuration.
@@ -56,6 +56,8 @@ public final class Main extends Plugin {
                 cfg.set("MessageNoTeleportYourself", "You cannot jump to yourself!");
                 cfg.set("MessageAlreadyConnectedToServer", "You are already connected to the Server %SERVERNAME%!");
                 cfg.set("MessageConnectingToServer", "You are connecting to the Server %SERVERNAME%!");
+                cfg.set("PluginCommandAlias", "jumpto");
+                cfg.set("PluginPermission", "jumto.use");
                 ConfigurationProvider.getProvider(YamlConfiguration.class).save(cfg, config);
                 prefix = cfg.get("MessagePrefix", "§7[§6JumpTo§7]") + " ";
 
@@ -67,6 +69,9 @@ public final class Main extends Plugin {
             // Load configuration.
             try { cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(config); } catch (IOException e) { e.printStackTrace(); }
         }
+
+        getProxy().getPluginManager().registerCommand(this, new jumptoCMD(cfg.getString("PluginCommandAlias"), cfg.getString("PluginPermission")));
+        getProxy().getPluginManager().registerListener(this, new PlayerListener());
     }
 
     public static Main getInstance() {
