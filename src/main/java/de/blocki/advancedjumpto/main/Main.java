@@ -57,7 +57,7 @@ public final class Main extends Plugin {
                 cfg.set("MessageAlreadyConnectedToServer", "You are already connected to the Server %SERVERNAME%!");
                 cfg.set("MessageConnectingToServer", "You are connecting to the Server %SERVERNAME%!");
                 cfg.set("PluginCommandAlias", "jumpto");
-                cfg.set("PluginPermission", "jumto.use");
+                cfg.set("PluginPermission", "jumpto.use");
                 ConfigurationProvider.getProvider(YamlConfiguration.class).save(cfg, config);
                 prefix = cfg.get("MessagePrefix", "§7[§6JumpTo§7]") + " ";
 
