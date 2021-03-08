@@ -1,10 +1,10 @@
 # AdvancedJumpTO
-AdvancedJumpTO is ja /jumpto Plugin for Minecraft BungeeCord Servers.
+AdvancedJumpTO is a `/jumpto` Plugin for Minecraft BungeeCord Servers.
 
 # Features
 
-  - /jumpto <player> -> sends you to the Server the Player is on
-  - TabComplete with automatical add and remove on Player Join.
+  - `/jumpto <player>` -> sends you to the Server the Player is on
+  - TabComplete with automated Playeradd and -remove on Playerjoin or -leave.
   - fully customizable!
 
 
@@ -13,20 +13,18 @@ It's powered by the BungeeCord API.
 
 ### Installation
 
-AdvancedNTE requires [BungeeCord](https://www.spigotmc.org/wiki/bungeecord-installation/) to run.
+AdvancedJumpTo requires [BungeeCord](https://www.spigotmc.org/wiki/bungeecord-installation/) to work.
 
-Download the Latest Version of the Plugin [here](https://github.com/blockiyt/advancedjumpto/releases) and put it into your Plugins folder in your BungeeCord Server.
+Download the latest Version of the Plugin [here](https://github.com/blockiyt/advancedjumpto/releases) and put it into your Plugins folder on your BungeeCord Server.
 
-Restart or Reload the Server an you are done!
+Restart or Reload the Server, then you are done!
 
 ### Todos
 - none
 
-
-
 License
 ----
 
-MIT
+AdvancedJumpTo is licensed under the MIT-License.
 
 **Free Software, Hell Yeah!**
