@@ -15,11 +15,10 @@ import net.md_5.bungee.event.EventPriority;
 import java.util.ArrayList;
 import java.util.List;
 
-public class jumptoCMD extends Command implements TabExecutor, Listener {
-    public jumptoCMD(String name, String permission){ super(name, permission); }
+public class JumptoCMD extends Command implements TabExecutor, Listener {
+    public JumptoCMD(String name, String permission){ super(name, permission); }
 
-    public static List<String> mainCMD = new ArrayList<String>();
-
+    public static List<String> mainCMD = new ArrayList<>();
 
     @Override
     public void execute(CommandSender sender, String[] args) {
@@ -31,21 +30,21 @@ public class jumptoCMD extends Command implements TabExecutor, Listener {
                     if(!(playertoget.getUniqueId() == player.getUniqueId())) {
                         Server servertoget = playertoget.getServer();
                         if (player.getServer().getInfo().getName().equalsIgnoreCase(servertoget.getInfo().getName())) {
-                            player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("MessageAlreadyConnectedToServer").replace("%SERVERNAME%", servertoget.getInfo().getName())).color(ChatColor.RED).create());
+                            player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("Message.AlreadyConnectedToServer").replace("%SERVERNAME%", servertoget.getInfo().getName())).color(ChatColor.RED).create());
                         } else {
-                            player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("MessageConnectingToServer").replace("%SERVERNAME%", servertoget.getInfo().getName())).create());
+                            player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("Message.ConnectingToServer").replace("%SERVERNAME%", servertoget.getInfo().getName())).create());
                             player.connect(servertoget.getInfo());
                         }
                     }else {
-                        player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("MessageNoTeleportYourself")).create());
+                        player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("Message.NoTeleportYourself")).create());
                     }
                 }else {
                     //player not found
-                    player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("MessagePlayerNotFound")).create());
+                    player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("Message.PlayerNotFound")).create());
                 }
             }else {
                 //kein player angegeben
-                player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("MessageNoPlayer")).create());
+                player.sendMessage(new ComponentBuilder(Main.prefix + Main.cfg.getString("Message.NoPlayer")).create());
             }
         }else {
             //is kein player
@@ -56,7 +55,7 @@ public class jumptoCMD extends Command implements TabExecutor, Listener {
     @Override
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
 
-        List<String> result = new ArrayList<String>();
+        List<String> result = new ArrayList<>();
         if(mainCMD.isEmpty()){
             for(ProxiedPlayer player : ProxyServer.getInstance().getPlayers()){
                 mainCMD.add(player.getName());

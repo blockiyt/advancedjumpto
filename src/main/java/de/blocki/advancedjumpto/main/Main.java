@@ -1,6 +1,6 @@
 package de.blocki.advancedjumpto.main;
 
-import de.blocki.advancedjumpto.commands.jumptoCMD;
+import de.blocki.advancedjumpto.commands.JumptoCMD;
 import de.blocki.advancedjumpto.listener.PlayerListener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -27,15 +27,8 @@ public final class Main extends Plugin {
         //instance the Class
         Main.instance = this;
 
-        //register events and commands
-        /*getProxy().getPluginManager().registerCommand(this, new jumptoCMD("jumpto", "jumpto.use"));
-        getProxy().getPluginManager().registerListener(this, new PlayerListener());*/
-
-
         // Handle configuration.
-        if (!getDataFolder().exists()) {
-            getDataFolder().mkdir();
-        }
+        if (!getDataFolder().exists()) { getDataFolder().mkdir(); }
         File config = new File(getDataFolder(),"config.yml");
 
         /*
@@ -44,22 +37,19 @@ public final class Main extends Plugin {
         if (!config.exists()) {
             try {
                 // First time run - do some initialization.
-                LOG.info("Configuring JumpTO module for the first time...");
+                LOG.info("Configuring JumpTo for the first time...");
 
                 // Initialize the configuration file.
                 config.createNewFile();
                 cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(config);
-
-                cfg.set("MessagePrefix", "§7[§6JumpTo§7]");
-                cfg.set("MessagePlayerNotFound", "The player you specified got not found!");
-                cfg.set("MessageNoPlayer", "You did not specify a player!");
-                cfg.set("MessageNoTeleportYourself", "You cannot jump to yourself!");
-                cfg.set("MessageAlreadyConnectedToServer", "You are already connected to the Server %SERVERNAME%!");
-                cfg.set("MessageConnectingToServer", "You are connecting to the Server %SERVERNAME%!");
-                cfg.set("PluginCommandAlias", "jumpto");
-                cfg.set("PluginPermission", "jumpto.use");
+                cfg.set("Message.Prefix", "§7[§6JumpTo§7]");
+                cfg.set("Message.PlayerNotFound", "The player you specified got not found!");
+                cfg.set("Message.NoPlayer", "You did not specify a player!");
+                cfg.set("Message.NoTeleportYourself", "You cannot jump to yourself!");
+                cfg.set("Message.AlreadyConnectedToServer", "You are already connected to the Server %SERVERNAME%!");
+                cfg.set("Message.ConnectingToServer", "You are connecting to the Server %SERVERNAME%!");
                 ConfigurationProvider.getProvider(YamlConfiguration.class).save(cfg, config);
-                prefix = cfg.get("MessagePrefix", "§7[§6JumpTo§7]") + " ";
+                prefix = cfg.get("Message.Prefix", "§7[§6JumpTo§7]") + " ";
 
             } catch (Exception ex) {
                 LOG.log(Level.SEVERE, "Error creating configuration file", ex);
@@ -68,9 +58,10 @@ public final class Main extends Plugin {
         } else {
             // Load configuration.
             try { cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(config); } catch (IOException e) { e.printStackTrace(); }
+            prefix = cfg.get("Message.Prefix", "§7[§6JumpTo§7]") + " ";
         }
 
-        getProxy().getPluginManager().registerCommand(this, new jumptoCMD(cfg.getString("PluginCommandAlias"), cfg.getString("PluginPermission")));
+        getProxy().getPluginManager().registerCommand(this, new JumptoCMD("jumpto", "jumpto.use"));
         getProxy().getPluginManager().registerListener(this, new PlayerListener());
     }
 
